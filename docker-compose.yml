@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  nodejs:
+  donation_server:
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: nodejs
-    container_name: nodejs
+    image: donation_server
+    container_name: donation_server
     restart: unless-stopped
     env_file: .env
     environment:
@@ -19,7 +19,7 @@ services:
       - "80:8080"
     volumes:
       - ./server:/home/node/app
-      - ./server/node_modules:/home/node/app/node_modules
+      - node_modules:/home/node/app/node_modules
     networks:
       - app-network
     command: ./wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/ts-node ./src/index.ts
