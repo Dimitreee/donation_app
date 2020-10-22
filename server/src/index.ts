@@ -4,17 +4,12 @@ import Koa from "koa";
 import Router from "koa-router";
 import bodyParser from "koa-bodyparser";
 import {AppRoutes} from "./routes";
+import {CONNECTION_CONFIG} from "./db";
 
-createConnection({
-    "type": "mongodb",
-    "host": "localhost",
-    "database": "test",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-        "src/entity/*.ts"
-    ],
-}).then(async () => {
+const port = process.env.PORT || 8080;
+
+// @ts-ignore
+createConnection(CONNECTION_CONFIG).then(async () => {
     const app = new Koa();
     const router = new Router();
 
@@ -24,7 +19,7 @@ createConnection({
     app.use(bodyParser());
     app.use(router.routes());
     app.use(router.allowedMethods());
-    app.listen(3000, () => {
-        console.log("Koa application is up and running on port 3000");
+    app.listen(port, () => {
+        console.log(`Donation app is up and running on port ${port}`);
     });
-}).catch(error => console.log("TypeORM connection error: ", error));
+}).catch(error => console.log("ORM connection error: ", error));

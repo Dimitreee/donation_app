@@ -9,7 +9,7 @@ export async function DonationSaveAction(ctx: Context, next: () => void) {
 
     if (validation.error) {
         ctx.body = {
-            "ok": false,
+            ok: false,
             error: validation.error.details[0]?.message,
         };
 
@@ -27,7 +27,7 @@ export async function DonationSaveAction(ctx: Context, next: () => void) {
     const new_donation = donation_repository.create({ amount, currency, id: uuidv4() });
     await donation_repository.save(new_donation);
 
-    ctx.body = {"ok": true };
+    ctx.body = {ok: true };
 
     await next();
 }
