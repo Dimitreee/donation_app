@@ -18,8 +18,8 @@ createConnection(CONNECTION_CONFIG).then(async () => {
     app.use(bodyParser());
     app.use(async (ctx, next) => {
         ctx.set("Access-Control-Allow-Origin", "*");
-        ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        ctx.set('Access-Control-Allow-Methods', 'POST');
+        ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        ctx.set("Access-Control-Allow-Methods", "POST");
         await next();
     });
     app.use(router.routes());
