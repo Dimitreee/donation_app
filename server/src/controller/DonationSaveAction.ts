@@ -2,7 +2,7 @@ import {Context} from "koa";
 import {getManager} from "typeorm";
 import {CURRENCIES, Donation} from "../entity/Donation";
 import {v4 as uuidv4} from "uuid";
-import {object, string, number} from "joi"
+import {object, string, number} from "joi";
 
 export async function DonationSaveAction(ctx: Context, next: () => void) {
     const validation = DONATION_SCHEMA.validate(ctx.request.body);
@@ -25,7 +25,7 @@ export async function DonationSaveAction(ctx: Context, next: () => void) {
     const new_donation = donation_repository.create({ amount, currency, id: uuidv4() });
     await donation_repository.save(new_donation);
 
-    ctx.body = {ok: true };
+    ctx.body = { ok: true };
 }
 
 const DONATION_SCHEMA = object().keys({
