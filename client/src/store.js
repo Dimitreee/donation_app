@@ -45,8 +45,8 @@ export default createStore({
     },
   },
   getters: {
+    donation: state => state.donation,
     currency: state => state.currency,
     presets: state => state.presets,
-    donation: state => state.donation,
   },
 });
