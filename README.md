@@ -10,5 +10,5 @@
     MONGO_PORT="27017"
     MONGO_DB="donation_db"
     ```
-3) run `docker-compose up`
-4) app started
+3) run `docker-compose up --build`
+4) app started at `localhost:80`

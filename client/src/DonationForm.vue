@@ -1,8 +1,8 @@
 <template>
   <form @submit.prevent="applyDonation">
-    <div>
+    <div style="display: flex; flex-direction: column">
       <label v-for="(preset_option, index) in presets" :key="index">
-        {{ preset_option }}
+        {{ preset_option.toLocaleString("en-US", { style: "currency", currency: currency.code }) }}
         <input
           type="radio"
           name="preset"
@@ -64,9 +64,7 @@ export default {
       const result = await this.$store.dispatch("applyDonation");
 
       if (result.ok) {
-        console.log(":)");
-      } else {
-        console.log(":(");
+        alert("Thank you for your donation!")
       }
     }
   }
