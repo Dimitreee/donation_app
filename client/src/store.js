@@ -14,6 +14,7 @@ export default createStore({
     donation: PRESETS[0],
     currency: CURRENCIES[0],
     presets: PRESETS,
+    requests: {},
   },
   mutations: {
     setCurrency: (state, currency) => {
@@ -24,15 +25,28 @@ export default createStore({
     },
     setPresets: (state, presets) => {
       state.presets = presets;
+    },
+    setRequest: (state, { url, ...rest }) => {
+      state.requests[url] = {...rest}
     }
   },
   actions: {
-    donate: (ctx) => {
-      console.log(ctx.state.donation);
+    applyDonation: async (ctx) => {
+      const payload = {
+        amount: ctx.state.donation,
+        currency: ctx.state.currency.code,
+      };
+
+      ctx.commit("setRequest", {url: DONATION_COMMAND_URI, loading: true});
+
+      const response = await donationCommand(payload);
+
+      ctx.commit("setRequest", {url: DONATION_COMMAND_URI, loading: false, response});
+
+      return response
     },
     updateCurrency: (ctx, currency) => {
       const prev_currency = {...ctx.state.currency};
-
       const next_currency = CURRENCIES.find(({code}) => code === currency);
       const ratio = next_currency.rate / prev_currency.rate;
 
@@ -48,5 +62,20 @@ export default createStore({
     donation: state => state.donation,
     currency: state => state.currency,
     presets: state => state.presets,
+    requests: state => state.requests,
   },
 });
+
+export const DONATION_COMMAND_URI = "http://localhost:4000/donate/";
+
+async function donationCommand(body) {
+  const request = await fetch(DONATION_COMMAND_URI, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });
+
+  return await request.json();
+}
