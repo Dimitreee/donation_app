@@ -13,8 +13,6 @@ export async function DonationSaveAction(ctx: Context, next: () => void) {
             error: validation.error.details[0]?.message,
         };
 
-        await next();
-
         return;
     }
 
@@ -28,8 +26,6 @@ export async function DonationSaveAction(ctx: Context, next: () => void) {
     await donation_repository.save(new_donation);
 
     ctx.body = {ok: true };
-
-    await next();
 }
 
 const DONATION_SCHEMA = object().keys({
