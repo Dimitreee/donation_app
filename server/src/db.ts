@@ -1,6 +1,4 @@
 const {
-    MONGO_USERNAME,
-    MONGO_PASSWORD,
     MONGO_HOSTNAME,
     MONGO_PORT,
     MONGO_DB
@@ -12,8 +10,6 @@ export const CONNECTION_CONFIG = {
     port: MONGO_PORT,
     database: MONGO_DB,
     synchronize: true,
-    username: MONGO_USERNAME,
-    password: MONGO_PASSWORD,
     useNewUrlParser: true,
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 500,
